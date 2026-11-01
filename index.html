@@ -684,6 +684,8 @@
   .rev-admin-item img{width:100%;height:90px;object-fit:cover;border-radius:8px;border:1px solid var(--border-soft);}
   .rev-admin-item button{position:absolute;top:4px;left:4px;background:rgba(14,24,48,.85);color:var(--danger);border-radius:999px;width:24px;height:24px;font-size:.9rem;}
   #admin-review-file{color:var(--text-muted);font-size:.85rem;}
+  .btn-whatsapp{display:block;background:var(--accent-sage);color:#16223F;font-weight:700;padding:15px;border-radius:999px;font-size:1rem;text-align:center;}
+  .pay-hint{color:var(--text-muted);font-size:.85rem;text-align:center;margin:-6px 0 18px;}
 </style>
 </head>
 <body>
@@ -799,13 +801,11 @@
 
     <div id="admin-gate" class="gate">
       <h2 style="text-align:center;">لوحة التحكم</h2>
-      <p>سجّلي دخولك</p>
-      <input type="email" id="admin-email-input" placeholder="الإيميل" style="direction:ltr">
-      <br>
+      <p>أدخلي كلمة المرور</p>
       <input type="password" id="admin-pass-input" placeholder="كلمة المرور">
       <br>
       <button id="admin-pass-submit">دخول</button>
-      <div class="gate-err" id="admin-gate-err">الإيميل أو كلمة المرور غلط</div>
+      <div class="gate-err" id="admin-gate-err">كلمة المرور غلط، جربي تاني</div>
     </div>
 
     <div id="admin-dashboard" style="display:none;">
@@ -852,7 +852,6 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script>
 (function(){
   // أول حاجة بتحصل: نضمن إن محتوى الصفحة يبان دايمًا حتى لو أي حاجة تانية فشلت تحت
@@ -861,6 +860,11 @@
   initCopyButtons();
 
   // ============ CONFIG — عدّلي هنا ============
+  var ADMIN_PASSCODE = "Noor2026";
+  var WA_NUMBER = "201031099111";
+  var WA_DISPLAY = "+201031099111";
+  var NOTIFY_EMAIL = "mahysx1976a@gmail.com";
+  var NOTIFY_CC = "emanwadoud82024@gmail.com";
   var PAYMENT_BANK = "البنك التجاري الدولي - CIB";
   var PAYMENT_ACCOUNT = "100062568954";
   var PAYMENT_BENEFICIARY = "نور";
@@ -881,12 +885,10 @@
 
   var FIREBASE_READY = false;
   var db = null;
-  var auth = null;
   try{
     if(firebaseConfig.apiKey.indexOf('PASTE_') === -1 && typeof firebase !== 'undefined'){
       firebase.initializeApp(firebaseConfig);
       db = firebase.database();
-      auth = firebase.auth();
       FIREBASE_READY = true;
     }
   }catch(e){
@@ -1043,11 +1045,7 @@
           payRow('رقم الحساب', PAYMENT_ACCOUNT, true) +
           payRow('اسم المستفيد', PAYMENT_BENEFICIARY, false) +
         '</div>' +
-        '<div class="payment-box">' +
-          '<div class="payment-box-title">بعد التحويل</div>' +
-          field('insta','اسمك على InstaPay','<input type="text" id="input-insta" placeholder="الاسم اللي ظاهر في التحويل">','من فضلك اكتبي اسمك على InstaPay') +
-          field('ref','الرقم المرجعي للتحويلة','<input type="text" id="input-ref" placeholder="الرقم المرجعي">','من فضلك اكتبي الرقم المرجعي') +
-        '</div>' +
+        '<p class="pay-hint">بعد تأكيد الحجز هيظهرلك رقم واتساب تبعتي عليه صورة التحويل.</p>' +
         '<div class="form-actions">' +
           '<button class="btn-confirm" id="btn-confirm">تأكيد الحجز</button>' +
           '<button class="btn-back" id="btn-back">رجوع</button>' +
@@ -1066,12 +1064,9 @@
     var phone = g('input-phone').value.trim().replace(/[\s-]/g,'');
     var age = parseInt(g('input-age').value, 10);
     var reason = g('input-reason').value.trim();
-    var insta = g('input-insta').value.trim();
-    var ref = g('input-ref').value.trim();
     var errs = {
       name: name.length < 2, phone: !/^01[0125][0-9]{8}$/.test(phone),
-      age: !(age >= 10 && age <= 90), reason: reason.length < 3,
-      insta: insta.length < 2, ref: ref.length < 4
+      age: !(age >= 10 && age <= 90), reason: reason.length < 3
     };
     var bad = false;
     Object.keys(errs).forEach(function(k){
@@ -1084,36 +1079,57 @@
 
     btn.disabled = true; btn.textContent = 'بنأكد الحجز...';
     var id = selectedSlot.id, d = selectedSlot.date, tm = selectedSlot.time;
-    var upd = {};
-    upd['taken/' + id] = true;
-    upd['bookings/' + id] = { name: name, phone: phone, age: age, reason: reason, instaName: insta, refNumber: ref, date: d, time: tm, paid: false, bookedAt: new Date().toISOString() };
-
+    var data = { name: name, phone: phone, age: age, reason: reason, date: d, time: tm, paid: false, bookedAt: new Date().toISOString() };
     function fail(text, release){
       msg.textContent = text; msg.classList.add('show');
       btn.disabled = false; btn.textContent = 'تأكيد الحجز';
       if(release){ selectedSlot = null; setTimeout(function(){ viewMode = 'list'; renderBooking(); }, 1800); }
     }
-    // تحديث واحد ذري: لو الميعاد اتحجز قبلك بيفشل كله
-    db.ref().update(upd).then(function(){
-      showConfirmation({ id: id, date: d, time: tm }, name);
-    }).catch(function(){
-      db.ref('taken/' + id).once('value').then(function(snap){
-        if(snap.exists()) fail('للأسف الميعاد ده اتحجز قبلك، اختاري ميعاد تاني من فضلك.', true);
-        else fail('حصلت مشكلة في حفظ الحجز، جربي تاني.', false);
-      }).catch(function(){ fail('حصلت مشكلة في حفظ الحجز، جربي تاني.', false); });
-    });
+    // قفل الميعاد: لو حد حجزه قبلك العملية بتفشل
+    db.ref('taken/' + id).transaction(function(cur){ if(cur) return; return true; }).then(function(res){
+      if(!res.committed){ fail('للأسف الميعاد ده اتحجز قبلك، اختاري ميعاد تاني من فضلك.', true); return; }
+      return db.ref('bookings/' + id).set(data).then(function(){
+        notifyEmail(data);
+        showConfirmation({ id: id, date: d, time: tm }, name);
+      });
+    }).catch(function(){ fail('حصلت مشكلة في حفظ الحجز، جربي تاني.', false); });
+  }
+
+  // إيميل تنبيه بكل حجز جديد (عن طريق خدمة FormSubmit المجانية)
+  function notifyEmail(b){
+    try{
+      var f = formatDateArabic(b.date);
+      fetch('https://formsubmit.co/ajax/' + NOTIFY_EMAIL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          _subject: 'حجز جديد على نور الوعي', _cc: NOTIFY_CC, _template: 'table', _captcha: 'false',
+          'الاسم': b.name, 'التليفون': b.phone, 'السن': b.age, 'السبب': b.reason,
+          'الميعاد': f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' — ' + formatTimeArabic(b.time)
+        })
+      }).catch(function(){});
+    }catch(e){}
   }
 
   function showConfirmation(slot, name){
     viewMode = 'done';
     var f = formatDateArabic(slot.date);
+    var when = f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' — ' + formatTimeArabic(slot.time);
+    var wa = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent('أهلاً، أنا ' + name + '. حجزت جلسة يوم ' + when + '. دي صورة التحويل:');
     bookingBody.innerHTML =
       '<div class="confirm-box">' +
         '<div class="confirm-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></div>' +
-        '<h3>وصلنا حجزك يا ' + esc(name) + '</h3>' +
-        '<p>يوم ' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + '، الساعة ' + formatTimeArabic(slot.time) + '.</p>' +
+        '<h3>خطوة أخيرة لتأكيد حجزك</h3>' +
+        '<p>ميعادك: ' + when + '</p>' +
+        '<div class="payment-box">' +
+          '<div class="payment-box-title">ابعتي صورة التحويل على واتساب</div>' +
+          '<p>حوّلي صورة التحويلة على الرقم ده، واكتبي معاها تفاصيل الميعاد اللي حجزتيه (اليوم والساعة) واسمك.</p>' +
+          '<div class="account-row"><span class="account-number">' + WA_DISPLAY + '</span>' +
+            '<button type="button" class="copy-btn" data-copy="' + WA_DISPLAY + '">نسخ</button></div>' +
+        '</div>' +
         '<div class="confirm-actions">' +
-          '<div class="confirm-success-note">هنراجع التحويل ونأكد حجزك في خلال 3 ساعات كحد أقصى ✅</div>' +
+          '<a class="btn-whatsapp" href="' + wa + '" target="_blank" rel="noopener">افتحي واتساب وابعتي الصورة</a>' +
+          '<div class="confirm-success-note">يتم تأكيد حجزك في خلال 3 ساعات كحد أقصى بعد وصول صورة التحويل ✅</div>' +
           '<a class="link-again" href="#" id="book-again">احجزي ميعاد تاني</a>' +
         '</div>' +
       '</div>';
@@ -1141,22 +1157,18 @@
   function stopAdmin(){
     gate.style.display = 'block'; dashboard.style.display = 'none';
     if(db && adminListening){ db.ref('bookings').off(); db.ref('reviews').off(); }
-    adminListening = false; bookingsData = {};
+    adminListening = false; bookingsData = {}; document.getElementById('admin-pass-input').value = '';
   }
-  if(auth){ auth.onAuthStateChanged(function(u){ if(u) startAdmin(); else stopAdmin(); }); }
 
   function doLogin(){
     var err = document.getElementById('admin-gate-err');
     err.classList.remove('show');
-    if(!auth) return;
-    auth.signInWithEmailAndPassword(
-      document.getElementById('admin-email-input').value.trim(),
-      document.getElementById('admin-pass-input').value
-    ).catch(function(){ err.classList.add('show'); });
+    if(document.getElementById('admin-pass-input').value === ADMIN_PASSCODE){ startAdmin(); }
+    else{ err.classList.add('show'); }
   }
   document.getElementById('admin-pass-submit').addEventListener('click', doLogin);
   document.getElementById('admin-pass-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
-  document.getElementById('admin-logout').addEventListener('click', function(){ if(auth) auth.signOut(); });
+  document.getElementById('admin-logout').addEventListener('click', function(){ stopAdmin(); });
 
   var dateInput = document.getElementById('admin-date-input');
   dateInput.min = todayStr();
@@ -1211,7 +1223,6 @@
         return '<div class="admin-row"><div class="row-info">' + esc(b.name) + ' — ' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' ' + formatTimeArabic(b.time) +
           '<span class="sub">' + esc(b.phone) + ' · السن: ' + esc(b.age) + '</span>' +
           '<span class="sub">السبب: ' + esc(b.reason) + '</span>' +
-          '<span class="sub">InstaPay: ' + esc(b.instaName) + ' · مرجع: ' + esc(b.refNumber) + '</span>' +
           '<span class="pay-badge ' + (b.paid ? 'paid' : 'pending') + '">' + (b.paid ? 'تم الدفع' : 'قيد التأكيد') + '</span></div>' +
           '<div class="row-actions">' +
             '<button class="row-toggle-pay" data-slot="' + esc(b.slotId) + '" data-paid="' + b.paid + '">' + (b.paid ? 'إلغاء التأكيد' : 'تأكيد الدفع') + '</button>' +
