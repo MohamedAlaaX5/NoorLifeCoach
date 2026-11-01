@@ -663,6 +663,27 @@
     .booking{padding:40px 18px; border-radius:24px;}
     .add-slot-form{flex-direction:column; align-items:stretch;}
   }
+
+  .field textarea{width:100%;background:var(--bg-deep);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:13px 16px;color:var(--text-light);font-size:1rem;font-family:inherit;min-height:96px;resize:vertical;transition:border-color .25s var(--ease);}
+  .field textarea:focus{border-color:var(--accent-gold);}
+  .notice-box{background:var(--accent-gold-glow);border:1px solid rgba(229,184,118,.35);color:var(--accent-gold);border-radius:var(--radius-md);padding:14px 18px;margin-bottom:22px;font-size:.9rem;font-weight:700;text-align:center;line-height:1.7;}
+  .pay-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--bg-deep);border:1px solid var(--border-soft);border-radius:var(--radius-sm);padding:11px 16px;margin-bottom:8px;}
+  .pay-label{color:var(--text-dim);font-size:.8rem;flex-shrink:0;}
+  .pay-value{color:var(--text-light);font-weight:700;font-size:.95rem;flex:1;text-align:left;unicode-bidi:plaintext;}
+  .reviews-marquee{direction:ltr;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding:6px 0 10px;}
+  .reviews-marquee::-webkit-scrollbar{display:none;}
+  .reviews-track{display:flex;gap:16px;width:max-content;margin:0 auto;padding:0 16px;}
+  .rev-img{height:340px;width:auto;max-width:min(80vw,540px);object-fit:contain;border-radius:var(--radius-md);background:var(--bg-panel);border:1px solid var(--border-soft);cursor:zoom-in;flex-shrink:0;}
+  @media (max-width:520px){.rev-img{height:280px;}}
+  .lightbox{position:fixed;inset:0;background:rgba(6,10,20,.92);z-index:120;display:none;align-items:center;justify-content:center;padding:20px;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:94vw;max-height:88vh;border-radius:12px;object-fit:contain;}
+  .lightbox-close{position:absolute;top:16px;left:16px;background:var(--bg-panel-2);color:var(--text-light);border-radius:999px;width:42px;height:42px;font-size:1.4rem;}
+  .rev-admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:10px;margin-top:14px;}
+  .rev-admin-item{position:relative;}
+  .rev-admin-item img{width:100%;height:90px;object-fit:cover;border-radius:8px;border:1px solid var(--border-soft);}
+  .rev-admin-item button{position:absolute;top:4px;left:4px;background:rgba(14,24,48,.85);color:var(--danger);border-radius:999px;width:24px;height:24px;font-size:.9rem;}
+  #admin-review-file{color:var(--text-muted);font-size:.85rem;}
 </style>
 </head>
 <body>
@@ -677,11 +698,11 @@
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="glow-orb"></div>
-  <span class="eyebrow">مساحة آمنة، من غير أحكام</span>
-  <h1>حاسة إنك <em>تايهة</em> شوية؟<br>يلا نبدأ نسمع نفسك</h1>
-  <p class="lede">جلسات فردية أونلاين بأدوات العلاج السلوكي المعرفي، في جو من الخصوصية والاحترام الكامل لقصتك — خطوة بخطوة، بالسرعة اللي تناسبك.</p>
-  <a href="#booking" class="cta-primary">احجزي جلستك دلوقتي</a>
-  <div class="hero-note">مفيش تسجيل، مفيش حساب — بس اسمك ورقمك وميعاد يناسبك</div>
+  <span class="eyebrow">مساحة آمنة لفهم نفسك، من غير أحكام</span>
+  <h1>حاسة إنك <em>تايهة</em> شوية؟<br>يالا نبدأ سوا نفهم إيه اللي بيحصل جواكِ</h1>
+  <p class="lede">جلسات فردية أونلاين تساعدك تفهمي أفكارك ومشاعرك، وتتعرفي على الأنماط اللي بتتكرر في حياتك، باستخدام أدوات من علم النفس الإيجابي والعلاج المعرفي السلوكي والكوتشينج. خطوة بخطوة، في مساحة تحترم خصوصيتك.</p>
+  <a href="#booking" class="cta-primary">احجزي جلستك الأولى</a>
+  <div class="hero-note">من غير تسجيل حساب — اختاري ميعادك واملي بياناتك بسهولة</div>
 </section>
 
 <!-- ============ BENEFITS ============ -->
@@ -717,18 +738,29 @@
     <div class="about-text">
       <h2>أنا نور</h2>
       <p>لايف كوتش متخصصة في تقديم الدعم النفسي والتطوير الشخصي، باستخدام أدوات من العلاج السلوكي المعرفي (CBT) في جلسات فردية أونلاين.</p>
-      <p>بشتغل مع اللي حاسين إنهم تعبانين نفسيًا، أو تايهين، أو عايشين قلق وضغط بيأثر على حياتهم اليومية — وعايزين حد يسمعهم بجد ويمشي معاهم خطوة بخطوة نحو صورة أهدى لنفسهم.</p>
+      <p>بشتغل مع كل بنت حاسة إنها تعبانة نفسيًا، أو تايهة، أو عايشة قلق وضغط بيأثر على يومها — وعايزة حد يسمعها بجد ويمشي معاها خطوة بخطوة نحو صورة أهدى لنفسها.</p>
       <p>مفيش هنا حكم، ومفيش استعجال. بس مساحة حقيقية إنك تسمعي نفسك، وتبدئي تفهمي اللي جواكي.</p>
     </div>
   </div>
 </section>
 
+<section id="reviews-section" style="display:none">
+  <div class="section-head">
+    <span class="kicker">آراء العميلات</span>
+    <h2>اللي قالوه عن التجربة</h2>
+    <p>مراجعات حقيقية من بنات جربوا الجلسات</p>
+  </div>
+  <div class="reviews-marquee" id="reviews-marquee"><div class="reviews-track" id="reviews-track"></div></div>
+</section>
+
+<div class="lightbox" id="lightbox"><button class="lightbox-close" id="lightbox-close" aria-label="إغلاق">×</button><img id="lightbox-img" alt=""></div>
+
 <!-- ============ BOOKING ============ -->
 <section id="booking">
   <div class="section-head reveal">
     <span class="kicker">الحجز</span>
-    <h2>احجزي جلستك دلوقتي</h2>
-    <p>اختاري اليوم والميعاد اللي يناسبك، وتفاصيل حجزك هتوصلني على طول</p>
+    <h2>احجزي جلستك الأولى</h2>
+    <p>بيانات بسيطة لتأكيد الحجز والموعد — وخصوصيتك محفوظة</p>
   </div>
 
   <div class="booking reveal">
@@ -767,11 +799,13 @@
 
     <div id="admin-gate" class="gate">
       <h2 style="text-align:center;">لوحة التحكم</h2>
-      <p>أدخلي كلمة المرور</p>
+      <p>سجّلي دخولك</p>
+      <input type="email" id="admin-email-input" placeholder="الإيميل" style="direction:ltr">
+      <br>
       <input type="password" id="admin-pass-input" placeholder="كلمة المرور">
       <br>
       <button id="admin-pass-submit">دخول</button>
-      <div class="gate-err" id="admin-gate-err">كلمة المرور غلط، جربي تاني</div>
+      <div class="gate-err" id="admin-gate-err">الإيميل أو كلمة المرور غلط</div>
     </div>
 
     <div id="admin-dashboard" style="display:none;">
@@ -804,15 +838,21 @@
         <div class="admin-list" id="admin-bookings-list"></div>
       </div>
 
-      <div class="privacy-note">
-        ملحوظة: البيانات دي بتتخزن بشكل مبسط ومفيهاش نظام حماية قوي بمعنى كلمة السر دي مجرد فاصل بسيط بينك وبين الزوار العاديين، مش تشفير حقيقي. متعتمديش عليها لبيانات حساسة جدًا.
+      <div class="admin-section">
+        <h3>صور المراجعات</h3>
+        <input type="file" id="admin-review-file" accept="image/*" multiple>
+        <div class="admin-sub" id="admin-review-status" style="margin:10px 0 0;">اختاري صور (لحد 15 صورة). بتتضغط أوتوماتيك.</div>
+        <div class="rev-admin-grid" id="admin-reviews-list"></div>
       </div>
+
+      <div class="privacy-note"><button class="admin-close" id="admin-logout" style="float:none">تسجيل خروج</button></div>
     </div>
   </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script>
 (function(){
   // أول حاجة بتحصل: نضمن إن محتوى الصفحة يبان دايمًا حتى لو أي حاجة تانية فشلت تحت
@@ -821,10 +861,11 @@
   initCopyButtons();
 
   // ============ CONFIG — عدّلي هنا ============
-  var ADMIN_PASSCODE = "Noor2026";
-  var PAYMENT_BANK = "CIB";
+  var PAYMENT_BANK = "البنك التجاري الدولي - CIB";
   var PAYMENT_ACCOUNT = "100062568954";
+  var PAYMENT_BENEFICIARY = "نور";
   var SESSION_PRICE = "500 جنيه";
+  var MAX_REVIEWS = 15;
 
   // بيانات الاتصال بقاعدة بيانات Firebase
   var firebaseConfig = {
@@ -840,10 +881,12 @@
 
   var FIREBASE_READY = false;
   var db = null;
+  var auth = null;
   try{
     if(firebaseConfig.apiKey.indexOf('PASTE_') === -1 && typeof firebase !== 'undefined'){
       firebase.initializeApp(firebaseConfig);
       db = firebase.database();
+      auth = firebase.auth();
       FIREBASE_READY = true;
     }
   }catch(e){
@@ -855,6 +898,9 @@
 
   var slotsData = {};    // { [slotId]: {date, time} }
   var bookingsData = {}; // { [slotId]: {name, phone, date, time, bookedAt} }
+  var takenData = {};   // { [slotId]: true }
+  var reviewsData = {};
+  var viewMode = "list"; // list | form | done
   var selectedDate = null;
   var selectedSlot = null; // {id, date, time}
 
@@ -886,14 +932,13 @@
   function slotId(date, time){ return date + '_' + time; }
 
   function openSlotsList(){
-    var t = todayStr(), now = nowTimeStr();
-    var list = [];
+    var t = todayStr(), now = nowTimeStr(), list = [];
     Object.keys(slotsData).forEach(function(id){
-      var s = slotsData[id];
-      if(bookingsData[id]) return;
-      if(s.date < t) return;
-      if(s.date === t && s.time <= now) return;
-      list.push({ id: id, date: s.date, time: s.time });
+      var sl = slotsData[id];
+      if(takenData[id]) return;
+      if(sl.date < t) return;
+      if(sl.date === t && sl.time <= now) return;
+      list.push({ id: id, date: sl.date, time: sl.time });
     });
     list.sort(function(a,b){
       if(a.date !== b.date) return a.date < b.date ? -1 : 1;
@@ -915,6 +960,7 @@
   var bookingBody = document.getElementById('booking-body');
 
   function renderBooking(){
+    if(viewMode !== "list") return;
     if(!FIREBASE_READY){
       bookingBody.innerHTML =
         '<div class="empty-state">' +
@@ -971,29 +1017,36 @@
     });
   }
 
+  function esc(x){ return String(x == null ? '' : x).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function field(id, label, input, err){
+    return '<div class="field"><label>' + label + '</label>' + input + '<div class="field-error" id="err-' + id + '">' + err + '</div></div>';
+  }
+  function payRow(label, value, copy){
+    return '<div class="pay-row"><span class="pay-label">' + label + '</span><span class="pay-value">' + value + '</span>' +
+      (copy ? '<button type="button" class="copy-btn" data-copy="' + value + '">نسخ</button>' : '') + '</div>';
+  }
+
   function showBookingForm(slot){
-    selectedSlot = slot;
+    selectedSlot = slot; viewMode = 'form';
     var f = formatDateArabic(slot.date);
     bookingBody.innerHTML =
       '<div class="booking-form">' +
         '<div class="selected-summary">' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' — ' + formatTimeArabic(slot.time) + '</div>' +
-        '<div class="field">' +
-          '<label>الاسم</label>' +
-          '<input type="text" id="input-name" placeholder="اكتبي اسمك">' +
-          '<div class="field-error" id="err-name">من فضلك اكتبي اسمك</div>' +
-        '</div>' +
-        '<div class="field">' +
-          '<label>رقم التليفون</label>' +
-          '<input type="tel" id="input-phone" placeholder="01xxxxxxxxx" inputmode="numeric">' +
-          '<div class="field-error" id="err-phone">من فضلك اكتبي رقم صحيح</div>' +
+        '<div class="notice-box">يتم تأكيد الحجز في خلال مدة أقصاها 3 ساعات بعد دفع رسوم الحجز</div>' +
+        field('name','الاسم','<input type="text" id="input-name" placeholder="اكتبي اسمك">','من فضلك اكتبي اسمك') +
+        field('phone','رقم التليفون','<input type="tel" id="input-phone" placeholder="01xxxxxxxxx" inputmode="numeric">','من فضلك اكتبي رقم صحيح') +
+        field('age','السن','<input type="number" id="input-age" placeholder="مثال: 25" inputmode="numeric">','من فضلك اكتبي سنك') +
+        field('reason','السبب اللي عايزة تحجزي عشانه / المشكلة اللي بتعاني منها','<textarea id="input-reason" placeholder="احكيلنا باختصار..."></textarea>','من فضلك اكتبي السبب باختصار') +
+        '<div class="payment-box">' +
+          '<div class="payment-box-title">طريقة الدفع — رسوم الحجز ' + SESSION_PRICE + '</div>' +
+          payRow('اسم البنك', PAYMENT_BANK, false) +
+          payRow('رقم الحساب', PAYMENT_ACCOUNT, true) +
+          payRow('اسم المستفيد', PAYMENT_BENEFICIARY, false) +
         '</div>' +
         '<div class="payment-box">' +
-          '<div class="payment-box-title">طريقة الدفع</div>' +
-          '<p>بعد الحجز، حوّلي ' + SESSION_PRICE + ' على حساب ' + PAYMENT_BANK + ' التالي، واكتبي اسمك زي ما هتكتبيه فوق في خانة الاسم على InstaPay عشان يتم تأكيد حجزك بسهولة.</p>' +
-          '<div class="account-row">' +
-            '<span class="account-number">' + PAYMENT_ACCOUNT + '</span>' +
-            '<button type="button" class="copy-btn" data-copy="' + PAYMENT_ACCOUNT + '">نسخ</button>' +
-          '</div>' +
+          '<div class="payment-box-title">بعد التحويل</div>' +
+          field('insta','اسمك على InstaPay','<input type="text" id="input-insta" placeholder="الاسم اللي ظاهر في التحويل">','من فضلك اكتبي اسمك على InstaPay') +
+          field('ref','الرقم المرجعي للتحويلة','<input type="text" id="input-ref" placeholder="الرقم المرجعي">','من فضلك اكتبي الرقم المرجعي') +
         '</div>' +
         '<div class="form-actions">' +
           '<button class="btn-confirm" id="btn-confirm">تأكيد الحجز</button>' +
@@ -1001,89 +1054,71 @@
         '</div>' +
         '<div class="form-msg" id="form-msg"></div>' +
       '</div>';
-
     document.getElementById('btn-back').addEventListener('click', function(){
-      selectedSlot = null;
-      renderBooking();
+      selectedSlot = null; viewMode = 'list'; renderBooking();
     });
     document.getElementById('btn-confirm').addEventListener('click', submitBooking);
   }
 
   function submitBooking(){
-    var nameInput = document.getElementById('input-name');
-    var phoneInput = document.getElementById('input-phone');
-    var name = nameInput.value.trim();
-    var phone = phoneInput.value.trim().replace(/[\s-]/g,'');
-    var errName = document.getElementById('err-name');
-    var errPhone = document.getElementById('err-phone');
-    var msg = document.getElementById('form-msg');
-    var btn = document.getElementById('btn-confirm');
-
-    errName.classList.remove('show');
-    errPhone.classList.remove('show');
+    var g = function(id){ return document.getElementById(id); };
+    var name = g('input-name').value.trim();
+    var phone = g('input-phone').value.trim().replace(/[\s-]/g,'');
+    var age = parseInt(g('input-age').value, 10);
+    var reason = g('input-reason').value.trim();
+    var insta = g('input-insta').value.trim();
+    var ref = g('input-ref').value.trim();
+    var errs = {
+      name: name.length < 2, phone: !/^01[0125][0-9]{8}$/.test(phone),
+      age: !(age >= 10 && age <= 90), reason: reason.length < 3,
+      insta: insta.length < 2, ref: ref.length < 4
+    };
+    var bad = false;
+    Object.keys(errs).forEach(function(k){
+      g('err-' + k).classList.toggle('show', errs[k]);
+      if(errs[k]) bad = true;
+    });
+    var msg = g('form-msg'), btn = g('btn-confirm');
     msg.classList.remove('show');
+    if(bad) return;
 
-    var valid = true;
-    if(name.length < 2){ errName.classList.add('show'); valid = false; }
-    var phoneOk = /^01[0125][0-9]{8}$/.test(phone);
-    if(!phoneOk){ errPhone.classList.add('show'); valid = false; }
-    if(!valid) return;
+    btn.disabled = true; btn.textContent = 'بنأكد الحجز...';
+    var id = selectedSlot.id, d = selectedSlot.date, tm = selectedSlot.time;
+    var upd = {};
+    upd['taken/' + id] = true;
+    upd['bookings/' + id] = { name: name, phone: phone, age: age, reason: reason, instaName: insta, refNumber: ref, date: d, time: tm, paid: false, bookedAt: new Date().toISOString() };
 
-    btn.disabled = true;
-    btn.textContent = 'بنأكد الحجز...';
-
-    var slotId2 = selectedSlot.id;
-    var slotDate = selectedSlot.date;
-    var slotTime = selectedSlot.time;
-
-    // معاملة ذرية: تنجح بس لو محدش حجز الميعاد ده قبلنا، عشان محدش يحجز نفس الميعاد مرتين
-    db.ref('bookings/' + slotId2).transaction(function(current){
-      if(current !== null) return; // abort — already booked
-      return { name: name, phone: phone, date: slotDate, time: slotTime, paid: false, bookedAt: new Date().toISOString() };
-    }).then(function(result){
-      if(!result.committed){
-        msg.textContent = 'للأسف الميعاد ده اتحجز قبلك، اختاري ميعاد تاني من فضلك.';
-        msg.classList.add('show');
-        btn.disabled = false;
-        btn.textContent = 'تأكيد الحجز';
-        selectedSlot = null;
-        setTimeout(renderBooking, 1600);
-      }else{
-        showConfirmation({ id: slotId2, date: slotDate, time: slotTime }, name);
-      }
+    function fail(text, release){
+      msg.textContent = text; msg.classList.add('show');
+      btn.disabled = false; btn.textContent = 'تأكيد الحجز';
+      if(release){ selectedSlot = null; setTimeout(function(){ viewMode = 'list'; renderBooking(); }, 1800); }
+    }
+    // تحديث واحد ذري: لو الميعاد اتحجز قبلك بيفشل كله
+    db.ref().update(upd).then(function(){
+      showConfirmation({ id: id, date: d, time: tm }, name);
     }).catch(function(){
-      msg.textContent = 'حصلت مشكلة في حفظ الحجز، جربي تاني.';
-      msg.classList.add('show');
-      btn.disabled = false;
-      btn.textContent = 'تأكيد الحجز';
+      db.ref('taken/' + id).once('value').then(function(snap){
+        if(snap.exists()) fail('للأسف الميعاد ده اتحجز قبلك، اختاري ميعاد تاني من فضلك.', true);
+        else fail('حصلت مشكلة في حفظ الحجز، جربي تاني.', false);
+      }).catch(function(){ fail('حصلت مشكلة في حفظ الحجز، جربي تاني.', false); });
     });
   }
 
   function showConfirmation(slot, name){
+    viewMode = 'done';
     var f = formatDateArabic(slot.date);
-
     bookingBody.innerHTML =
       '<div class="confirm-box">' +
         '<div class="confirm-icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg></div>' +
-        '<h3>الميعاد محجوز ليكِ</h3>' +
+        '<h3>وصلنا حجزك يا ' + esc(name) + '</h3>' +
         '<p>يوم ' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + '، الساعة ' + formatTimeArabic(slot.time) + '.</p>' +
-        '<div class="payment-box">' +
-          '<div class="payment-box-title">خطوة أخيرة لتأكيد الحجز</div>' +
-          '<p>حوّلي ' + SESSION_PRICE + ' على حساب ' + PAYMENT_BANK + ' التالي، واكتبي اسمك "' + name + '" في خانة الاسم على InstaPay عشان أقدر أأكد حجزك بسهولة.</p>' +
-          '<div class="account-row">' +
-            '<span class="account-number">' + PAYMENT_ACCOUNT + '</span>' +
-            '<button type="button" class="copy-btn" data-copy="' + PAYMENT_ACCOUNT + '">نسخ</button>' +
-          '</div>' +
-        '</div>' +
         '<div class="confirm-actions">' +
+          '<div class="confirm-success-note">هنراجع التحويل ونأكد حجزك في خلال 3 ساعات كحد أقصى ✅</div>' +
           '<a class="link-again" href="#" id="book-again">احجزي ميعاد تاني</a>' +
         '</div>' +
       '</div>';
-
     document.getElementById('book-again').addEventListener('click', function(e){
-      e.preventDefault();
-      selectedSlot = null;
-      renderBooking();
+      e.preventDefault(); selectedSlot = null; viewMode = 'list'; renderBooking();
     });
   }
 
@@ -1091,31 +1126,37 @@
   var overlay = document.getElementById('admin-overlay');
   var gate = document.getElementById('admin-gate');
   var dashboard = document.getElementById('admin-dashboard');
+  var adminListening = false;
 
-  document.getElementById('admin-trigger').addEventListener('click', function(){
-    overlay.classList.add('open');
-    gate.style.display = 'block';
-    dashboard.style.display = 'none';
-    document.getElementById('admin-pass-input').value = '';
-    document.getElementById('admin-gate-err').classList.remove('show');
-  });
-  document.getElementById('admin-close').addEventListener('click', function(){
-    overlay.classList.remove('open');
-  });
+  document.getElementById('admin-trigger').addEventListener('click', function(){ overlay.classList.add('open'); });
+  document.getElementById('admin-close').addEventListener('click', function(){ overlay.classList.remove('open'); });
 
-  document.getElementById('admin-pass-submit').addEventListener('click', function(){
-    var val = document.getElementById('admin-pass-input').value;
-    if(val === ADMIN_PASSCODE){
-      gate.style.display = 'none';
-      dashboard.style.display = 'block';
-      renderAdmin();
-    }else{
-      document.getElementById('admin-gate-err').classList.add('show');
-    }
-  });
-  document.getElementById('admin-pass-input').addEventListener('keydown', function(e){
-    if(e.key === 'Enter') document.getElementById('admin-pass-submit').click();
-  });
+  function startAdmin(){
+    gate.style.display = 'none'; dashboard.style.display = 'block';
+    if(adminListening || !db) return;
+    adminListening = true;
+    db.ref('bookings').on('value', function(snap){ bookingsData = snap.val() || {}; renderAdmin(); }, function(){});
+    db.ref('reviews').on('value', function(snap){ reviewsData = snap.val() || {}; renderAdminReviews(); renderReviews(); }, function(){});
+  }
+  function stopAdmin(){
+    gate.style.display = 'block'; dashboard.style.display = 'none';
+    if(db && adminListening){ db.ref('bookings').off(); db.ref('reviews').off(); }
+    adminListening = false; bookingsData = {};
+  }
+  if(auth){ auth.onAuthStateChanged(function(u){ if(u) startAdmin(); else stopAdmin(); }); }
+
+  function doLogin(){
+    var err = document.getElementById('admin-gate-err');
+    err.classList.remove('show');
+    if(!auth) return;
+    auth.signInWithEmailAndPassword(
+      document.getElementById('admin-email-input').value.trim(),
+      document.getElementById('admin-pass-input').value
+    ).catch(function(){ err.classList.add('show'); });
+  }
+  document.getElementById('admin-pass-submit').addEventListener('click', doLogin);
+  document.getElementById('admin-pass-input').addEventListener('keydown', function(e){ if(e.key === 'Enter') doLogin(); });
+  document.getElementById('admin-logout').addEventListener('click', function(){ if(auth) auth.signOut(); });
 
   var dateInput = document.getElementById('admin-date-input');
   dateInput.min = todayStr();
@@ -1126,85 +1167,173 @@
     return '<button class="quick-time-btn" data-t="' + t + '">' + formatTimeArabic(t) + '</button>';
   }).join('');
   quickTimesEl.querySelectorAll('.quick-time-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.getElementById('admin-time-input').value = btn.getAttribute('data-t');
-    });
+    btn.addEventListener('click', function(){ document.getElementById('admin-time-input').value = btn.getAttribute('data-t'); });
   });
 
   document.getElementById('admin-add-slot').addEventListener('click', function(){
-    if(!FIREBASE_READY) return;
-    var d = dateInput.value;
-    var t = document.getElementById('admin-time-input').value;
+    if(!db) return;
+    var d = dateInput.value, t = document.getElementById('admin-time-input').value;
     if(!d || !t) return;
-    var id = slotId(d, t);
-    db.ref('slots/' + id).set({ date: d, time: t });
+    db.ref('slots/' + slotId(d, t)).set({ date: d, time: t });
   });
+
+  function cmp(a,b){ if(a.date !== b.date) return a.date < b.date ? -1 : 1; return a.time < b.time ? -1 : 1; }
 
   function renderAdmin(){
     var t = todayStr();
-
     var futureSlots = Object.keys(slotsData)
       .map(function(id){ return { id: id, date: slotsData[id].date, time: slotsData[id].time }; })
-      .filter(function(s){ return s.date >= t; })
-      .sort(function(a,b){ if(a.date!==b.date) return a.date<b.date?-1:1; return a.time<b.time?-1:1; });
-
+      .filter(function(x){ return x.date >= t; }).sort(cmp);
     var slotsList = document.getElementById('admin-slots-list');
-    if(futureSlots.length === 0){
+    if(!futureSlots.length){
       slotsList.innerHTML = '<div class="admin-empty">مفيش مواعيد مضافة لسه</div>';
     }else{
-      slotsList.innerHTML = futureSlots.map(function(s){
-        var f = formatDateArabic(s.date);
-        var isBooked = !!bookingsData[s.id];
-        return '<div class="admin-row">' +
-          '<div class="row-info">' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' — ' + formatTimeArabic(s.time) +
-            '<span class="sub">' + (isBooked ? 'محجوز' : 'متاح') + '</span></div>' +
-          (isBooked ? '' : '<button class="row-del" data-id="' + s.id + '">حذف</button>') +
-        '</div>';
+      slotsList.innerHTML = futureSlots.map(function(x){
+        var f = formatDateArabic(x.date), booked = !!takenData[x.id];
+        return '<div class="admin-row"><div class="row-info">' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' — ' + formatTimeArabic(x.time) +
+          '<span class="sub">' + (booked ? 'محجوز' : 'متاح') + '</span></div>' +
+          (booked ? '' : '<button class="row-del" data-id="' + x.id + '">حذف</button>') + '</div>';
       }).join('');
       slotsList.querySelectorAll('.row-del').forEach(function(btn){
-        btn.addEventListener('click', function(){
-          var id = btn.getAttribute('data-id');
-          db.ref('slots/' + id).remove();
-        });
+        btn.addEventListener('click', function(){ db.ref('slots/' + btn.getAttribute('data-id')).remove(); });
       });
     }
 
-    var futureBookings = Object.keys(bookingsData)
-      .map(function(id){ var b = bookingsData[id]; return { slotId: id, date: b.date, time: b.time, name: b.name, phone: b.phone, paid: !!b.paid }; })
-      .filter(function(b){ return b.date >= t; })
-      .sort(function(a,b){ if(a.date!==b.date) return a.date<b.date?-1:1; return a.time<b.time?-1:1; });
-
-    var bookingsList = document.getElementById('admin-bookings-list');
-    if(futureBookings.length === 0){
-      bookingsList.innerHTML = '<div class="admin-empty">مفيش حجوزات لسه</div>';
+    var fb = Object.keys(bookingsData)
+      .map(function(id){ var b = bookingsData[id]; b.slotId = id; b.paid = !!b.paid; return b; })
+      .filter(function(b){ return b.date >= t; }).sort(cmp);
+    var bl = document.getElementById('admin-bookings-list');
+    if(!fb.length){
+      bl.innerHTML = '<div class="admin-empty">مفيش حجوزات لسه</div>';
     }else{
-      bookingsList.innerHTML = futureBookings.map(function(b){
+      bl.innerHTML = fb.map(function(b){
         var f = formatDateArabic(b.date);
-        return '<div class="admin-row">' +
-          '<div class="row-info">' + b.name + ' — ' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' ' + formatTimeArabic(b.time) +
-            '<span class="sub">' + b.phone + '</span>' +
-            '<span class="pay-badge ' + (b.paid ? 'paid' : 'pending') + '">' + (b.paid ? 'تم الدفع' : 'قيد التأكيد') + '</span></div>' +
+        return '<div class="admin-row"><div class="row-info">' + esc(b.name) + ' — ' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' ' + formatTimeArabic(b.time) +
+          '<span class="sub">' + esc(b.phone) + ' · السن: ' + esc(b.age) + '</span>' +
+          '<span class="sub">السبب: ' + esc(b.reason) + '</span>' +
+          '<span class="sub">InstaPay: ' + esc(b.instaName) + ' · مرجع: ' + esc(b.refNumber) + '</span>' +
+          '<span class="pay-badge ' + (b.paid ? 'paid' : 'pending') + '">' + (b.paid ? 'تم الدفع' : 'قيد التأكيد') + '</span></div>' +
           '<div class="row-actions">' +
-            '<button class="row-toggle-pay" data-slot="' + b.slotId + '" data-paid="' + b.paid + '">' + (b.paid ? 'إلغاء التأكيد' : 'تأكيد الدفع') + '</button>' +
-            '<button class="row-del" data-slot="' + b.slotId + '">إلغاء الحجز</button>' +
-          '</div>' +
-        '</div>';
+            '<button class="row-toggle-pay" data-slot="' + esc(b.slotId) + '" data-paid="' + b.paid + '">' + (b.paid ? 'إلغاء التأكيد' : 'تأكيد الدفع') + '</button>' +
+            '<button class="row-del" data-slot="' + esc(b.slotId) + '">إلغاء الحجز</button></div></div>';
       }).join('');
-      bookingsList.querySelectorAll('.row-del').forEach(function(btn){
+      bl.querySelectorAll('.row-del').forEach(function(btn){
         btn.addEventListener('click', function(){
           if(!confirm('تأكيد إلغاء الحجز ده؟')) return;
-          var sid = btn.getAttribute('data-slot');
-          db.ref('bookings/' + sid).remove();
+          var sid = btn.getAttribute('data-slot'), u = {};
+          u['bookings/' + sid] = null; u['taken/' + sid] = null;
+          db.ref().update(u);
         });
       });
-      bookingsList.querySelectorAll('.row-toggle-pay').forEach(function(btn){
+      bl.querySelectorAll('.row-toggle-pay').forEach(function(btn){
         btn.addEventListener('click', function(){
-          var sid = btn.getAttribute('data-slot');
-          var currentlyPaid = btn.getAttribute('data-paid') === 'true';
-          db.ref('bookings/' + sid + '/paid').set(!currentlyPaid);
+          db.ref('bookings/' + btn.getAttribute('data-slot') + '/paid').set(btn.getAttribute('data-paid') !== 'true');
         });
       });
     }
+  }
+
+  // ---------- Reviews ----------
+  function sortedReviewIds(){ return Object.keys(reviewsData).sort(function(a,b){ return (reviewsData[a].t||0) - (reviewsData[b].t||0); }); }
+
+  function renderAdminReviews(){
+    var box = document.getElementById('admin-reviews-list');
+    box.innerHTML = sortedReviewIds().map(function(id){
+      return '<div class="rev-admin-item"><img src="' + reviewsData[id].thumb + '" alt=""><button data-id="' + id + '" aria-label="حذف">×</button></div>';
+    }).join('');
+    box.querySelectorAll('button').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(!confirm('حذف الصورة دي؟')) return;
+        var u = {}, id = btn.getAttribute('data-id');
+        u['reviews/' + id] = null; u['reviewsFull/' + id] = null;
+        db.ref().update(u);
+      });
+    });
+  }
+
+  function loadImg(file){
+    return new Promise(function(res, rej){
+      var fr = new FileReader();
+      fr.onload = function(){ var im = new Image(); im.onload = function(){ res(im); }; im.onerror = rej; im.src = fr.result; };
+      fr.onerror = rej; fr.readAsDataURL(file);
+    });
+  }
+  function shrink(im, maxW, maxH, q){
+    var r = Math.min(1, maxW / im.width, maxH / im.height);
+    var w = Math.max(1, Math.round(im.width * r)), h = Math.max(1, Math.round(im.height * r));
+    var c = document.createElement('canvas'); c.width = w; c.height = h;
+    var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, w, h); x.drawImage(im, 0, 0, w, h);
+    return { data: c.toDataURL('image/jpeg', q), w: w, h: h };
+  }
+  document.getElementById('admin-review-file').addEventListener('change', async function(e){
+    var files = Array.prototype.slice.call(e.target.files), st = document.getElementById('admin-review-status');
+    for(var i = 0; i < files.length; i++){
+      if(Object.keys(reviewsData).length >= MAX_REVIEWS){ st.textContent = 'وصلتي للحد الأقصى (' + MAX_REVIEWS + ' صورة). احذفي صورة قبل ما تضيفي.'; break; }
+      st.textContent = 'بنرفع الصورة ' + (i + 1) + ' من ' + files.length + '...';
+      try{
+        var im = await loadImg(files[i]);
+        var th = shrink(im, 800, 400, 0.7), fu = shrink(im, 1100, 1100, 0.78);
+        var id = 'r' + Date.now() + i, u = {};
+        u['reviews/' + id] = { thumb: th.data, w: th.w, h: th.h, t: Date.now() };
+        u['reviewsFull/' + id] = { full: fu.data };
+        await db.ref().update(u);
+        st.textContent = 'تم رفع الصور ✓';
+      }catch(err){ st.textContent = 'حصلت مشكلة في رفع إحدى الصور، جربي تاني.'; }
+    }
+    e.target.value = '';
+  });
+
+  var mq = { pos: 0, paused: false, raf: 0, timer: 0, bound: false };
+  function renderReviews(){
+    var sec = document.getElementById('reviews-section'), cont = document.getElementById('reviews-marquee'), track = document.getElementById('reviews-track');
+    var ids = sortedReviewIds();
+    if(!ids.length){ sec.style.display = 'none'; return; }
+    sec.style.display = '';
+    var set = ids.map(function(id){
+      var r = reviewsData[id];
+      return '<img class="rev-img" data-id="' + id + '" src="' + r.thumb + '" style="aspect-ratio:' + r.w + '/' + r.h + '" alt="مراجعة من إحدى العميلات">';
+    }).join('');
+    track.innerHTML = set;
+    requestAnimationFrame(function(){
+      if(track.scrollWidth > cont.clientWidth + 8 && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)){
+        track.innerHTML = set + set;
+        startMarquee(cont);
+      }
+    });
+  }
+  function startMarquee(c){
+    if(!mq.bound){
+      mq.bound = true;
+      ['pointerdown','touchstart','wheel','mouseenter'].forEach(function(ev){
+        c.addEventListener(ev, function(){ mq.paused = true; clearTimeout(mq.timer); }, { passive: true });
+      });
+      ['pointerup','touchend','mouseleave'].forEach(function(ev){
+        c.addEventListener(ev, function(){ clearTimeout(mq.timer); mq.timer = setTimeout(function(){ mq.pos = c.scrollLeft; mq.paused = false; }, 1500); }, { passive: true });
+      });
+    }
+    if(mq.raf) return;
+    mq.pos = c.scrollLeft;
+    (function step(){
+      if(!mq.paused){
+        var half = c.scrollWidth / 2;
+        mq.pos += 0.6;
+        while(half > 0 && mq.pos >= half) mq.pos -= half;
+        c.scrollLeft = mq.pos;
+      }
+      mq.raf = requestAnimationFrame(step);
+    })();
+  }
+  function initLightbox(){
+    var lb = document.getElementById('lightbox'), img = document.getElementById('lightbox-img');
+    document.getElementById('reviews-track').addEventListener('click', function(e){
+      var t = e.target.closest('.rev-img'); if(!t) return;
+      var id = t.getAttribute('data-id');
+      img.src = t.src; lb.classList.add('open');
+      if(db) db.ref('reviewsFull/' + id).once('value').then(function(s){ var v = s.val(); if(v && v.full && lb.classList.contains('open')) img.src = v.full; }).catch(function(){});
+    });
+    function close(){ lb.classList.remove('open'); img.src = ''; }
+    lb.addEventListener('click', function(e){ if(e.target !== img) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape') close(); });
   }
 
   // ---------- Copy account number ----------
@@ -1263,17 +1392,11 @@
   }
 
   // ---------- Init ----------
+  initLightbox();
   if(FIREBASE_READY){
-    db.ref('slots').on('value', function(snap){
-      slotsData = snap.val() || {};
-      renderBooking();
-      renderAdmin();
-    });
-    db.ref('bookings').on('value', function(snap){
-      bookingsData = snap.val() || {};
-      renderBooking();
-      renderAdmin();
-    });
+    db.ref('slots').on('value', function(snap){ slotsData = snap.val() || {}; renderBooking(); renderAdmin(); });
+    db.ref('taken').on('value', function(snap){ takenData = snap.val() || {}; renderBooking(); renderAdmin(); });
+    db.ref('reviews').once('value').then(function(snap){ reviewsData = snap.val() || {}; renderReviews(); }).catch(function(){});
   }else{
     renderBooking();
   }
