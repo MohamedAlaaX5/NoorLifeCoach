@@ -740,7 +740,7 @@
     <div class="about-text">
       <h2>أنا نور</h2>
       <p>لايف كوتش معتمد، وأخصائية علم نفس إيجابي، وأخصائية علاج معرفي سلوكي (CBT)، وممارسة للبرمجة اللغوية العصبية (NLP) وتقنيات PEAT، وعضو بأكاديميات خارج مصر متخصصة في تطوير الذات.</p>
-      <p>أساعدك على فهم نفسك ومشاعرك، ومراجعة المعتقدات  و الافكار  التي تعيق تقدمك ، وتبنى طرق تفكير أكثر مرونة واتزانا، وبناء حدود صحية وعلاقات أفضل، واتخاذ خطوات عملية نحو أهدافك.</p>
+      <p>أساعدك على فهم نفسك ومشاعرك، ومراجعة المعتقدات والأفكار التي تعيق تقدمك، وتبنّي طرق تفكير أكثر مرونة واتزانًا، وبناء حدود صحية وعلاقات أفضل، واتخاذ خطوات عملية نحو أهدافك.</p>
     </div>
   </div>
 </section>
@@ -1043,11 +1043,8 @@
           payRow('اسم البنك', PAYMENT_BANK, false) +
           payRow('رقم الحساب', PAYMENT_ACCOUNT, true) +
           payRow('اسم المستفيد', PAYMENT_BENEFICIARY, false) +
-          '</div>' +
-           '<div class="payment-box">' +
-            '<div class="payment-box-title">بعد التحويل</div>' +
-            field('insta','اسمك على InstaPay','<input type="text" id="input-insta" placeholder="الاسم اللي ظاهر في التحويل">','من فضلك اكتبي اسمك على InstaPay') +
         '</div>' +
+        field('insta','اسمك على InstaPay','<input type="text" id="input-insta" placeholder="الاسم اللي هيظهر في التحويل">','من فضلك اكتبي اسمك على InstaPay') +
         '<p class="pay-hint">بعد تأكيد الحجز هيظهرلك رقم واتساب تبعتي عليه صورة التحويل.</p>' +
         '<div class="form-actions">' +
           '<button class="btn-confirm" id="btn-confirm">تأكيد الحجز</button>' +
@@ -1067,9 +1064,10 @@
     var phone = g('input-phone').value.trim().replace(/[\s-]/g,'');
     var age = parseInt(g('input-age').value, 10);
     var reason = g('input-reason').value.trim();
+    var insta = g('input-insta').value.trim();
     var errs = {
       name: name.length < 2, phone: !/^01[0125][0-9]{8}$/.test(phone),
-      age: !(age >= 10 && age <= 90), reason: reason.length < 3
+      age: !(age >= 10 && age <= 90), reason: reason.length < 3, insta: insta.length < 2
     };
     var bad = false;
     Object.keys(errs).forEach(function(k){
@@ -1082,7 +1080,7 @@
 
     btn.disabled = true; btn.textContent = 'بنأكد الحجز...';
     var id = selectedSlot.id, d = selectedSlot.date, tm = selectedSlot.time;
-    var data = { name: name, phone: phone, age: age, reason: reason, date: d, time: tm, paid: false, bookedAt: new Date().toISOString() };
+    var data = { name: name, phone: phone, age: age, reason: reason, instaName: insta, date: d, time: tm, paid: false, bookedAt: new Date().toISOString() };
     function fail(text, release){
       msg.textContent = text; msg.classList.add('show');
       btn.disabled = false; btn.textContent = 'تأكيد الحجز';
@@ -1107,7 +1105,7 @@
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify({
           _subject: 'حجز جديد على نور الوعي', _cc: NOTIFY_CC, _template: 'table', _captcha: 'false',
-          'الاسم': b.name, 'التليفون': b.phone, 'السن': b.age, 'السبب': b.reason,
+          'الاسم': b.name, 'التليفون': b.phone, 'السن': b.age, 'السبب': b.reason, 'الاسم على InstaPay': b.instaName,
           'الميعاد': f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' — ' + formatTimeArabic(b.time)
         })
       }).catch(function(){});
@@ -1226,6 +1224,7 @@
         return '<div class="admin-row"><div class="row-info">' + esc(b.name) + ' — ' + f.dayName + ' ' + f.dayNum + ' ' + f.monthName + ' ' + formatTimeArabic(b.time) +
           '<span class="sub">' + esc(b.phone) + ' · السن: ' + esc(b.age) + '</span>' +
           '<span class="sub">السبب: ' + esc(b.reason) + '</span>' +
+          '<span class="sub">InstaPay: ' + esc(b.instaName) + '</span>' +
           '<span class="pay-badge ' + (b.paid ? 'paid' : 'pending') + '">' + (b.paid ? 'تم الدفع' : 'قيد التأكيد') + '</span></div>' +
           '<div class="row-actions">' +
             '<button class="row-toggle-pay" data-slot="' + esc(b.slotId) + '" data-paid="' + b.paid + '">' + (b.paid ? 'إلغاء التأكيد' : 'تأكيد الدفع') + '</button>' +
